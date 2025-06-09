@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+@theme{
+    --font-default: "Inria Sans",sans-serif;
+
+    --color-primary: #F5F5DC;
+}
+
+@layer base{
+    body{
+        @apply font-default bg-primary;
+    }
+}
