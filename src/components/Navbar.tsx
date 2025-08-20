@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import LoginIcon from '@mui/icons-material/Login';
 
 export const Navbar = () => {
   return (
@@ -11,6 +12,9 @@ export const Navbar = () => {
         </Link>
         <Link className="hover:text-orange-500" to={"/shopping"}>
             <li>Shopping list</li>
+        </Link>
+        <Link className="hover:text-orange-500 ml-8" to={"/login"}>
+            <li>Login <LoginIcon/></li>
         </Link>
     </ul>
   )
