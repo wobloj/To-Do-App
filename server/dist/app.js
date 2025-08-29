@@ -1,0 +1,28 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
+const express_1 = __importDefault(require("express"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const cors_1 = __importDefault(require("cors"));
+const morgan_1 = __importDefault(require("morgan"));
+const passport_1 = __importDefault(require("./config/passport"));
+const auth_1 = __importDefault(require("./routes/auth"));
+const todos_1 = __importDefault(require("./routes/todos"));
+const shopping_1 = __importDefault(require("./routes/shopping"));
+const errorHandler_1 = require("./middlewares/errorHandler");
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use((0, cookie_parser_1.default)());
+app.use((0, morgan_1.default)("dev"));
+app.use((0, cors_1.default)({ origin: ((_a = process.env.CLIENT_URL) === null || _a === void 0 ? void 0 : _a.split(",")) || process.env.CLIENT_URL || "*", credentials: true }));
+app.use(passport_1.default.initialize());
+app.use("/auth", auth_1.default);
+app.use("/todos", todos_1.default);
+app.use("/shopping", shopping_1.default);
+app.get("/health", (_req, res) => res.json({ status: "ok" }));
+app.use(errorHandler_1.errorHandler);
+exports.default = app;
