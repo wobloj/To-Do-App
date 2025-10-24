@@ -55,7 +55,7 @@ export const Login = () => {
                     OR
                 </Divider>
                 <p className="text-center text-xl my-5">Login with</p>
-                <div className="flex flex-row items-center justify-around gap-4 mt-2">
+                <div className="flex flex-row items-center justify-around gap-4 mt-2 pb-10">
                     <a href="http://localhost:4000/auth/google" className="flex flex-row items-center gap-2 cursor-pointer hover:text-orange-500">
                         <GoogleIcon fontSize="large"/>
                         Google

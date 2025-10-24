@@ -1,10 +1,11 @@
 import { Edit, Remove } from "@mui/icons-material"
 import { Checkbox, Tooltip } from "@mui/material";
 import { FC, useState } from "react";
+import { Dayjs } from "dayjs"
 
 interface ISingleTodo{
     text:string;
-    deadline?:string;
+    deadline?:Dayjs|string;
 }
 
 export const SingleTodo:FC<ISingleTodo> = ({text, deadline}) => {
@@ -24,7 +25,7 @@ export const SingleTodo:FC<ISingleTodo> = ({text, deadline}) => {
         </div>
         <div className="flex flex-col">
             <label className={isCompleted ? `line-through text-gray-400` : ""} htmlFor="task">{text}</label>
-            <p className={isCompleted ? `line-through text-gray-400` : "text-gray-500"}>{deadline}</p>
+            <p className={isCompleted ? `line-through text-gray-400` : "text-gray-500"}>{deadline?.toString()}</p>
         </div>
         <div className="m-4 flex flex-row gap-4">
             <Tooltip title="Delete">

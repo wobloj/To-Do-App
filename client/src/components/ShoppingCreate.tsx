@@ -49,7 +49,7 @@ export const ShoppingCreate = () => {
   }
 
   return (
-    <div className="text-center mx-20 w-full flex flex-col justify-top">
+    <div className="text-center w-full flex flex-col justify-top">
       <h1 className="text-3xl mb-20">Create new shopping list</h1>
       <Stepper className="mb-20" activeStep={activeStep} alternativeLabel>
         <Step>
@@ -65,7 +65,14 @@ export const ShoppingCreate = () => {
         {activeStep === 0 && 
         <>
           <p className="text-xl font-light mb-20">Enter Your shopping list title and select shop</p>
-          <Input onChange={(e) => {setTitle(e.target.value)}} position="items-center" type="text" placeholder="Title" label="title" title="Title" className="w-1/2 text-center mb-10"/>
+          <Input 
+            onChange={(e) => {setTitle(e.target.value)}} 
+            position="items-center" 
+            type="text" 
+            placeholder="Title" 
+            label="title" 
+            title="Title" 
+            className="max-w-96 min-w-72 text-center mb-10"/>
           <FormControl className="w-1/3 self-center">
             <InputLabel id="shop-label">Shop</InputLabel>
             <Select value={shop} onChange={(e) => setShop(e.target.value as string)} labelId="shop-label" label="Shop" className="mb-10">
@@ -90,9 +97,10 @@ export const ShoppingCreate = () => {
                 placeholder="Qnt."
                 label="qnt"
                 title="Quantity"
+                min={1}
                 value={productQuantity}
                 onChange={(e) => setProductQuantity(Number(e.target.value))}
-                className="ml-10 w-20 text-center"
+                className="ml-10 w-9 sm:w-20 text-center"
               />
               <Input
                 required
@@ -104,7 +112,7 @@ export const ShoppingCreate = () => {
                 title="Task"
                 value={productName}
                 onChange={(e) => setProductName(e.target.value)}
-                className="ml-10 w-96 text-center"
+                className="ml-10 w-52 sm:w-96 text-center"
               />
               <IconButton
                 onClick={() => {
@@ -118,7 +126,7 @@ export const ShoppingCreate = () => {
                 <Add color="warning" />
               </IconButton>
           </div>
-          <ShoppingListPreview title={title} shop={shop} items={items}/>
+          <ShoppingListPreview title={title} shop={shop} items={items} className="w-64"/>
         </> }
 
         {activeStep === 2 && 

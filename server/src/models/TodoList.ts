@@ -1,17 +1,16 @@
 import mongoose, {Schema, Document, Model, Types} from "mongoose";
 
-export interface ITask extends Document {
-    text: string;
-    done: boolean;
-    dueDate?: Date;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
 export interface ITodoList extends Document {
     title: string;
     userId: Types.ObjectId;
     tasks: ITask[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+export interface ITask extends Document {
+    text: string;
+    done: boolean;
+    dueDate?: Date;
     createdAt: Date;
     updatedAt: Date;
 }

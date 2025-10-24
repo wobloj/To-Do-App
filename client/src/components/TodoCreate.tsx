@@ -12,19 +12,19 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Stepper, Step, StepLabel } from "@mui/material";
 import { TodoListPreview } from "./TodoListPreview"
+import { redirect } from "react-router-dom"
 
 
 
 export const TodoCreate = () => {
-  const [hasDeadline, setHasDeadline] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
 
   const [title, setTitle] = useState("New Task");
   const [task, setTask] = useState("");
-  const [deadline, setDeadline] = useState<string>("");
-  const [todos, setTodos] = useState<{ text: string; deadline?: string }[]>([]);
+  const [deadline, setDeadline] = useState<Dayjs|string>();
+  const [todos, setTodos] = useState<{ text: string; deadline?: Dayjs|string }[]>([]);
 
-  const [list , setList] = useState<{title: string; todos: {text: string; deadline?: string}[]}>({title:"", todos:[]});
+  const [list , setList] = useState<{title: string; todos: {text: string; deadline?: Dayjs|string }[]}>({title:"", todos:[]});
   
     useEffect(() =>{
       if(list){
@@ -37,21 +37,25 @@ export const TodoCreate = () => {
       setList(newList);
       console.log("Shopping List Saved:", newList);
   
-      setActiveStep(0);
       setTitle("New Shopping List");
       setTodos([]);
+      redirect("/")
     };
 
 
   const handleStep = () => {
+    if(activeStep === 2){
+      
+    }
     setActiveStep(activeStep+1)
+
   }
 
   const handleDeadlineChange = (date: Dayjs | null) => {
-    if (hasDeadline && date) {
+    if (date) {
       setDeadline(date.format("DD.MM.YYYY"));
     } else {
-      setDeadline("");
+      setDeadline("No deadline");
     }
   };
 
@@ -69,7 +73,7 @@ export const TodoCreate = () => {
   }
 
   return (
-    <div className="text-center mx-20 w-full">
+    <div className="text-center w-full">
         <h3 className="text-3xl mb-20">Create new TODO list</h3>
         <Stepper className="mb-20" activeStep={activeStep} alternativeLabel>
             <Step>
@@ -113,13 +117,12 @@ export const TodoCreate = () => {
                 placeholder="Enter your task" 
                 label="task" 
                 title="Task" 
-                className="ml-10 w-96 text-center"
+                className="ml-10 max-w-96 min-w-72 text-center"
                 onChange={(e) => setTask(e.target.value)}/>
               <IconButton onClick={() => {
                 if(task.trim()){
-                  setTodos([...todos, { text: task, deadline: hasDeadline && deadline ? deadline : "" }]);
+                  setTodos([...todos, { text: task, deadline: deadline !== "" ? deadline : "No deadline" }]);
                   setTask("");
-                  setHasDeadline(false);
                   setDeadline("");
                 }
                 console.log("Todos:", todos);
@@ -128,24 +131,14 @@ export const TodoCreate = () => {
               </IconButton>
             </div>
           
-            <FormControlLabel className="mb-10" control={
-              <Checkbox 
-              checked={hasDeadline} 
-              onChange={(e) => {
-                setHasDeadline(e.target.checked)
-                if (!e.target.checked) setDeadline("")
-              }} 
-              color="warning"/>
-              } label="Does it have deadline?"/>
-            {hasDeadline &&
-
+  
             <div className="flex flex-col items-center my-10">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker value={deadline ? dayjs(deadline, "DD.MM.YYYY"):null} onChange={handleDeadlineChange} disablePast label="Select deadline"/>
+                <DatePicker value={dayjs(deadline, "DD.MM.YYYY")} onChange={handleDeadlineChange} disablePast label="Select deadline"/>
               </LocalizationProvider>
-            </div>}
-          </>
-          }
+            </div>
+          </>}
+
 
           {activeStep === 2 &&
           <>
